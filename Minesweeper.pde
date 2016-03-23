@@ -7,10 +7,12 @@ private ArrayList <MSButton> bombs =  new ArrayList <MSButton>();
 int NUM_ROWS=20;
 int NUM_COLS=20;
 public boolean wine;
+
 public boolean l;
 int winM;
 int rcol;
 int rrow;
+int whiteN;
 void setup ()
 {
   size(400, 400);
@@ -51,18 +53,20 @@ public void draw ()
 public boolean isWon()
 {
   //your code here
-  if (winM==0) {
+  System.out.println(whiteN);
+  if (winM==0&&whiteN>=395) {
     return true;
   }
   return false;
 }
+
 public void displayLosingMessage()
 {
   String ltext = "YOU LOSEr";
-      for (int i = 0; i<8; i++) {
-        buttons[10][i+4].setLabel(ltext.substring(i, i+1));
-      }
-      noLoop();
+  for (int i = 0; i<8; i++) {
+    buttons[10][i+4].setLabel(ltext.substring(i, i+1));
+  }
+  noLoop();
 }
 public void displayWinningMessage()
 {
@@ -78,7 +82,7 @@ public class MSButton
 {
   private int r, c;
   private float x, y, width, height;
-  private boolean clicked, marked;
+  private boolean clicked, marked, white;
   private String label;
   public MSButton ( int rr, int cc )
   {
@@ -105,25 +109,28 @@ public class MSButton
   public void mousePressed () 
   {
 
-   
-      
-  
-     clicked=true;
-   if (mouseButton==RIGHT&&marked==false) {
+
+
+
+    clicked=true;
+    if (mouseButton==LEFT &&marked==false) {  
+      whiteN++;
+    }
+    if (mouseButton==RIGHT&&marked==false&&white==false) {
       marked = true;
-    
+
       if (bombs.contains(this)) {
         winM--;
       }
     } else if (mouseButton==LEFT && bombs.contains(this)&&marked==false) {
-      
+
       for (int i = 0; i<20; i++) {
         for (int a = 0; a<20; a++) {
           buttons[i][a].clicked=true;
         }
       }
       displayLosingMessage();
-    } else if (mouseButton==RIGHT&&marked==true) {
+    } else if (mouseButton==RIGHT&&marked==true&&white==false) {
       marked=false;
       clicked=false;
       if (bombs.contains(this)) {
@@ -131,33 +138,42 @@ public class MSButton
       }
     } else if (countBombs(r, c)>0&&marked==false) {
       setLabel( " "+countBombs(r, c));
+      white=true;
     } else { 
 
 
       if (isValid(r, c+1) &&buttons[r][c+1].isClicked()==false) {
         buttons[r][c+1].mousePressed();
+        white=true;
       }
       if (isValid(r, c-1) &&buttons[r][c-1].isClicked()==false) {
         buttons[r][c-1].mousePressed();
+        white=true;
       }
       if (isValid(r+1, c) &&buttons[r+1][c].isClicked()==false) {
         buttons[r+1][c].mousePressed();
+        white=true;
       }
       if (isValid(r-1, c) &&buttons[r-1][c].isClicked()==false) {
         buttons[r-1][c].mousePressed();
+        white=true;
       }
 
       if (isValid(r+1, c+1) &&buttons[r+1][c+1].isClicked()==false) {
         buttons[r+1][c+1].mousePressed();
+        white=true;
       }
       if (isValid(r-1, c-1) &&buttons[r-1][c-1].isClicked()==false) {
         buttons[r-1][c-1].mousePressed();
+        white=true;
       }
       if (isValid(r+1, c-1) &&buttons[r+1][c-1].isClicked()==false) {
         buttons[r+1][c-1].mousePressed();
+        white=true;
       }
       if (isValid(r-1, c+1) &&buttons[r-1][c+1].isClicked()==false) {
         buttons[r-1][c+1].mousePressed();
+        white=true;
       }
 
 
