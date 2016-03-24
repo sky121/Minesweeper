@@ -53,7 +53,7 @@ public void draw ()
 public boolean isWon()
 {
   //your code here
-  System.out.println(whiteN);
+
   if (winM==0&&whiteN>=395) {
     return true;
   }
