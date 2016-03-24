@@ -66,7 +66,7 @@ public void displayLosingMessage()
   for (int i = 0; i<8; i++) {
     buttons[10][i+4].setLabel(ltext.substring(i, i+1));
   }
-  noLoop();
+  
 }
 public void displayWinningMessage()
 {
